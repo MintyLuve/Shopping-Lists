@@ -11,8 +11,8 @@
  *   <li> Print the entire list </li> </ul>   
  */
 public class SinglyLinkedList<E extends Comparable<E>> {
-    private Node<E> head;
-    private Node<E> tail;
+    private Node head;
+    private Node tail;
     
     /**
      * A singly linked list that can: <ul>
@@ -34,7 +34,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      * @param price The price of the item you want to insert.
      */
     public void insertBeginning(String item, double price){
-	    Node<E> newNode = new Node<E>(item, price);
+	    Node newNode = new Node(item, price);
         // head (new node) --> old head
 	    newNode.setNext(head);
 	    head = newNode;
@@ -50,7 +50,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      * @param price The price of the item you want to insert.
      */
     public void insertEnd(String item, double price){
-	    Node<E> newNode = new Node<E>(item, price);
+	    Node newNode = new Node(item, price);
         if(tail != null){
             // old tail --> tail (new node)
             tail.setNext(newNode);
@@ -74,18 +74,18 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      */
     public void insertSortedAlphabetically(String item, double price){
         // Gets the new node
-	    Node<E> newNode = new Node<E>(item, price);
-        // if the list doesn't exist, or if the info is less then the first value
+	    Node newNode = new Node(item, price);
+        // if the list doesn't exist, or if the item name is less then the first value
         if(head == null || item.compareTo(head.getItem()) < 0){
             // first (new node) --> old first
             newNode.setNext(head);
             head = newNode;
         } else {
             //current node to use to go through the list
-            Node<E> currentNode = head;
+            Node currentNode = head;
             //while there is a next node in the list
             while (currentNode.getNext() != null){
-                //if the info is greater then the current info, but smaller then the next info
+                //if the item name is greater then the current item name, but smaller then the next item name
                 if (item.compareTo(currentNode.getItem()) > 0 && item.compareTo(currentNode.getNext().getItem()) <= 0){
                     // current node --> new node --> next node
                     newNode.setNext(currentNode.getNext());
@@ -110,14 +110,14 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      * @return The name of the first item
      */
     public String extractFirstItem(){
-        String data = null;
+        String item = null;
         // If the head exists
         if (head != null) {
-            // Return the info then move the head up one
-            data = head.getItem();
+            // Return the item name then move the head up one
+            item = head.getItem();
             head = head.getNext();
         }
-        return data;
+        return item;
     }
 
     /**
@@ -131,14 +131,14 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         if (tail != null) {
             // Return the data
             item = tail.getItem();
-            // if there is only one node, it deletes it and returns data
+            // if there is only one node, it deletes it and returns item name
             if (head == tail){
                 head = null;
                 tail = null;
                 return item;
             }
             // Getting the second to last node
-            Node<E> prev = head;
+            Node prev = head;
             while (prev.getNext().getNext() != null){
                 prev = prev.getNext();
             }
@@ -157,11 +157,11 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      */
     public boolean deleteFirstOccurrenceOfItem(String item){
         boolean success = false;
-        Node<E> currentNode = head;
+        Node currentNode = head;
 
         // while the current node is not the last one, and it didn't find the first occurrence
          while (currentNode.getNext() != null && !success){
-            Node<E> nextNode = currentNode.getNext();
+            Node nextNode = currentNode.getNext();
             // If the current node is the first one, and the current node is the first occurrence
             if(currentNode == head && currentNode.getItem() == item) {
                 // removes the reference to the old head, and makes current the new head
@@ -193,11 +193,11 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      */
     public int deleteAllOccurrencesOfItem(String item){
         int count = 0;
-        Node<E> currentNode = head;
+        Node currentNode = head;
 
         // While the current node is not the last node
         while (currentNode.getNext() != null){
-            Node<E> nextNode = currentNode.getNext();
+            Node nextNode = currentNode.getNext();
             // If the current node is the first one, and the current node is the first occurrence
             if(currentNode == head && currentNode.getItem() == item) {
                 // removes the reference to the old head, and makes current the new head
@@ -226,7 +226,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      * This function prints out the entire linked list.
      */
     public void print(){
-	    Node<E> current = head;
+	    Node current = head;
 	    String formattedPrice;
         System.out.print("[ ");
         // Traverses the list, printing out the current value
