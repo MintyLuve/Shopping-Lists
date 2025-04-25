@@ -6,8 +6,8 @@
 /**   A singly linked list that can: <ul>
  *   <li> Insert from the beginning, end, and sorted </li>
  *   <li> Extract from the beginning or the end </li>
- *   <li> Delete the first occurrence of a value </li>
- *   <li> Delete all occurrences of a value </li>
+ *   <li> Delete the first occurrence of an item </li>
+ *   <li> Delete all occurrences of an item </li>
  *   <li> Print the entire list </li> </ul>   
  */
 public class SinglyLinkedList<E extends Comparable<E>> {
@@ -18,8 +18,8 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      * A singly linked list that can: <ul>
      *   <li> Insert from the beginning, end, and sorted </li>
      *   <li> Extract from the beginning or the end </li>
-     *   <li> Delete the first occurrence of a value </li>
-     *   <li> Delete all occurrences of a value </li>
+     *   <li> Delete the first occurrence of an item </li>
+     *   <li> Delete all occurrences of an item </li>
      *   <li> Print the entire list </li> </ul>   
      */
     public SinglyLinkedList(){
@@ -29,11 +29,12 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
     
     /**
-     * This function adds a new node, and inserts it before the head.
-     * @param info The value you want to insert.
+     * This function adds a new item, and inserts it before the head.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
      */
-    public void insertBeginning(E info){
-	    Node<E> newNode = new Node<E>(info);
+    public void insertBeginning(String item, double price){
+	    Node<E> newNode = new Node<E>(item, price);
         // head (new node) --> old head
 	    newNode.setNext(head);
 	    head = newNode;
@@ -44,11 +45,12 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
 
     /**
-     * This function adds a new node, and inserts it after the tail.
-     * @param info The value you want to insert.
+     * This function adds a new item, and inserts it after the tail.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
      */
-    public void insertEnd(E info){
-	    Node<E> newNode = new Node<E>(info);
+    public void insertEnd(String item, double price){
+	    Node<E> newNode = new Node<E>(item, price);
         if(tail != null){
             // old tail --> tail (new node)
             tail.setNext(newNode);
@@ -66,14 +68,15 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
 
     /**
-     * This function adds a new node, and inserts it in the list either numerically or alphabetically.
-     * @param info The value you want to insert.
+     * This function adds a new item, and inserts it in the list alphabetically.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
      */
-    public void insertSorted(E info){
+    public void insertSortedAlphabetically(String item, double price){
         // Gets the new node
-	    Node<E> newNode = new Node<E>(info);
+	    Node<E> newNode = new Node<E>(item, price);
         // if the list doesn't exist, or if the info is less then the first value
-        if(head == null || info.compareTo(head.getInfo()) < 0){
+        if(head == null || item.compareTo(head.getItem()) < 0){
             // first (new node) --> old first
             newNode.setNext(head);
             head = newNode;
@@ -83,7 +86,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
             //while there is a next node in the list
             while (currentNode.getNext() != null){
                 //if the info is greater then the current info, but smaller then the next info
-                if (info.compareTo(currentNode.getInfo()) > 0 && info.compareTo(currentNode.getNext().getInfo()) <= 0){
+                if (item.compareTo(currentNode.getItem()) > 0 && item.compareTo(currentNode.getNext().getItem()) <= 0){
                     // current node --> new node --> next node
                     newNode.setNext(currentNode.getNext());
                     currentNode.setNext(newNode);
@@ -103,36 +106,36 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
     
     /**
-     * This function removes the first node from the list, and returns its value
-     * @return The value of the first node
+     * This function removes the first node from the list, and returns its name
+     * @return The name of the first item
      */
-    public E extractBeginning(){
-        E data = null;
+    public String extractFirstItem(){
+        String data = null;
         // If the head exists
         if (head != null) {
             // Return the info then move the head up one
-            data = head.getInfo();
+            data = head.getItem();
             head = head.getNext();
         }
         return data;
     }
 
     /**
-     * This function removes the last node from the list, and returns its value
-     * @return The value of the last node
+     * This function removes the last item from the list, and returns its name
+     * @return The name of the last item
      */
-    public E extractEnd(){
-	    E data = null;
+    public String extractLastItem(){
+	    String item = null;
 
         // if the tail exists
         if (tail != null) {
             // Return the data
-            data = tail.getInfo();
+            item = tail.getItem();
             // if there is only one node, it deletes it and returns data
             if (head == tail){
                 head = null;
                 tail = null;
-                return data;
+                return item;
             }
             // Getting the second to last node
             Node<E> prev = head;
@@ -144,15 +147,15 @@ public class SinglyLinkedList<E extends Comparable<E>> {
             tail = prev;
             tail.setNext(null);
         }
-        return data;
+        return item;
     }
 
     /**
-     * This function deletes the first occurrence of the inputted value.
-     * @param info The value you want deleted.
-     * @return Whether or not the value was successfully deleted
+     * This function deletes the first occurrence of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return Whether or not the item was successfully deleted
      */
-    public boolean deleteFirstOccurrence(E info){
+    public boolean deleteFirstOccurrenceOfItem(String item){
         boolean success = false;
         Node<E> currentNode = head;
 
@@ -160,7 +163,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
          while (currentNode.getNext() != null && !success){
             Node<E> nextNode = currentNode.getNext();
             // If the current node is the first one, and the current node is the first occurrence
-            if(currentNode == head && currentNode.getInfo() == info) {
+            if(currentNode == head && currentNode.getItem() == item) {
                 // removes the reference to the old head, and makes current the new head
                 head = head.getNext();
                 currentNode = head;
@@ -168,7 +171,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
                 success = true;
             }
             // If the next node is the first occurrence
-            else if (nextNode.getInfo() == info){
+            else if (nextNode.getItem() == item){
                 // Changes the current node to reference the next next node
                 currentNode.setNext(nextNode.getNext());
                 // Successfully deletes the first one, ending the loop
@@ -184,11 +187,11 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
 
     /**
-     * This function deletes all occurrences of the inputted value.
-     * @param info The value you want deleted.
-     * @return How many times the value got deleted.
+     * This function deletes all occurrences of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return How many times the item got deleted.
      */
-    public int deleteAllOccurrence(E info){
+    public int deleteAllOccurrencesOfItem(String item){
         int count = 0;
         Node<E> currentNode = head;
 
@@ -196,14 +199,14 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         while (currentNode.getNext() != null){
             Node<E> nextNode = currentNode.getNext();
             // If the current node is the first one, and the current node is the first occurrence
-            if(currentNode == head && currentNode.getInfo() == info) {
+            if(currentNode == head && currentNode.getItem() == item) {
                 // removes the reference to the old head, and makes current the new head
                 head = head.getNext();
                 currentNode = head;
                 // increments the count of how many times it was deleted
                 count++;
             }
-            else if (nextNode.getInfo() == info){
+            else if (nextNode.getItem() == item){
                 // Changes the current node to reference the next next node
                 currentNode.setNext(nextNode.getNext());
                 // increments the count of how many times it was deleted
@@ -224,13 +227,16 @@ public class SinglyLinkedList<E extends Comparable<E>> {
      */
     public void print(){
 	    Node<E> current = head;
-	    
+	    String formattedPrice;
         System.out.print("[ ");
         // Traverses the list, printing out the current value
-	    while (current != null){
-	        System.out.print(current.getInfo() + " ");
+	    while (current != null && current.getNext() != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+	        System.out.print(current.getItem() + " = $"+ formattedPrice +", ");
 	        current = current.getNext();
 	    }
-	    System.out.println("]");
+        formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+        System.out.print(current.getItem() + " = $"+ formattedPrice +"");
+	    System.out.println(" ]");
     }
 }

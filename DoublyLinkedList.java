@@ -1,8 +1,8 @@
 /** A doubly linked list that can: <ul>
  *   <li> Insert from the beginning, end, and sorted </li>
  *   <li> Extract from the beginning or the end </li>
- *   <li> Delete the first or last occurrence of a value </li>
- *   <li> Delete all occurrences of a value </li>
+ *   <li> Delete the first or last occurrence of an item </li>
+ *   <li> Delete all occurrences of an item </li>
  *   <li> Print the entire list forwards and backwards</li> </ul> */
  public class DoublyLinkedList<E extends Comparable<E>>{
     private Node<E> head;
@@ -11,8 +11,8 @@
     /** A doubly linked list that can: <ul>
      *   <li> Insert from the beginning, end, and sorted </li>
      *   <li> Extract from the beginning or the end </li>
-     *   <li> Delete the first or last occurrence of a value </li>
-     *   <li> Delete all occurrences of a value </li>
+     *   <li> Delete the first or last occurrence of an item </li>
+     *   <li> Delete all occurrences of an item </li>
      *   <li> Print the entire list forwards and backwards</li> </ul> */
     public DoublyLinkedList(){
         // Creates the head and the tail
@@ -20,10 +20,13 @@
         this.tail = null;
     }
     
-    /** This function adds a new node, and inserts it before the head.
-     * @param info The value you want to insert. */
-    public void insertBeginning(E info){
-	    Node<E> newNode = new Node<E>(info);
+    /**
+     * This function adds a new item, and inserts it before the head.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
+     */
+    public void insertBeginning(String item, double price){
+	    Node<E> newNode = new Node<E>(item, price);
         // head (new node) --> old head
 	    newNode.setNext(head);
         // if the head exists, sets the previous to new node
@@ -37,10 +40,13 @@
 	    }
     }
     
-    /** This function adds a new node, and inserts it after the tail.
-     * @param info The value you want to insert. */
-    public void insertEnd(E info){
-	    Node<E> newNode = new Node<E>(info);
+    /**
+     * This function adds a new item, and inserts it after the tail.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
+     */
+    public void insertEnd(String item, double price){
+	    Node<E> newNode = new Node<E>(item, price);
 	    if (tail == null){
             // If there is nothing in the list, adds new node
             head = newNode;
@@ -52,11 +58,14 @@
 	   }
     }
 
-    /** This function adds a new node, and inserts it in the list either numerically or alphabetically.
-     * @param info The value you want to insert. */
-    public void insertSorted(E info){
+    /**
+     * This function adds a new item, and inserts it in the list alphabetically.
+     * @param item The name of the item you want to insert.
+     * @param price The price of the item you want to insert.
+     */
+    public void insertSortedAlphabetically(String item, double price){
         // Gets the new node
-	    Node<E> newNode = new Node<E>(info);
+	    Node<E> newNode = new Node<E>(item, price);
         // if the list doesn't exist
         if(head == null){
             // first (new node) <--> old first
@@ -64,7 +73,7 @@
             head = newNode;
         }
         // if the info is less then the first value
-        else if (info.compareTo(head.getInfo()) < 0){
+        else if (item.compareTo(head.getItem()) < 0){
             // first (new node) --> old first
             newNode.setNext(head);
             head.setPrev(newNode);
@@ -76,7 +85,7 @@
             //while there is a next node in the list
             while (currentNode.getNext() != null){
                 //if the info is greater then the current info, but smaller then the next info
-                if (info.compareTo(currentNode.getInfo()) > 0 && info.compareTo(currentNode.getNext().getInfo()) <= 0){
+                if (item.compareTo(currentNode.getItem()) > 0 && item.compareTo(currentNode.getNext().getItem()) <= 0){
                     // current node <--> new node <--> next node
                     Node<E> nextNode = currentNode.getNext();
 
@@ -102,52 +111,58 @@
         }
     }
     
-    /** This function removes the first node from the list, and returns its value
-     * @return The value of the first node */
-    public E extractBeginning(){
-	    E data = null;
+    /**
+     * This function removes the first node from the list, and returns its name
+     * @return The name of the first item
+     */
+    public String extractFirstItem(){
+	    String item = null;
         // If the head and the next node exists
 	    if (head != null && head.getNext() != null){
             // Returns the info and moves the head up one
-            data = head.getInfo();
+            item = head.getItem();
             head = head.getNext();
             head.setPrev(null);
         }
         // If only the head exists
         else if (head != null){
             // Returns data and deletes the node
-            data = head.getInfo();
+            item = head.getItem();
             head = null;
             tail = null;
         }
-	    return data;
+	    return item;
     }
 
-    /** This function removes the last node from the list, and returns its value
-     * @return The value of the last node */
-    public E extractEnd(){
-	    E data = null;
+    /**
+     * This function removes the last item from the list, and returns its name
+     * @return The name of the last item
+     */
+    public String extractLastItem(){
+	    String item = null;
         // If the tail and the previous node exists
 	    if (tail != null && tail.getPrev() != null){
             // Returns the info and moves the tail back one
-            data = tail.getInfo();
+            item = tail.getItem();
             tail = tail.getPrev();
             tail.setNext(null);
         }
         // If only the tail exists
         else if (tail != null){
             // Returns data and deletes the node
-            data = tail.getInfo();
+            item = tail.getItem();
             tail = null;
             head = null;
         }
-	    return data;
+	    return item;
     }
 
-    /** This function deletes the first occurrence of the inputted value.
-     * @param info The value you want deleted.
-     * @return Whether or not the value was successfully deleted */
-    public boolean deleteFirstOccurrence(E info){
+    /**
+     * This function deletes the first occurrence of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return Whether or not the item was successfully deleted
+     */
+    public boolean deleteFirstOccurrenceOfItem(String item){
         boolean success = false;
         Node<E> current = head;
         // If no list exists
@@ -160,7 +175,7 @@
                 Node<E> prev = current.getPrev();
                 Node<E> next = current.getNext();
                 // If there is only one node and that should be deleted
-                if (head == tail && info == current.getInfo()){
+                if (head == tail && item == current.getItem()){
                     // Deletes head + tail
                     head = null;
                     tail = null;
@@ -168,7 +183,7 @@
                     success = true;
                 }
                 // If the head is the data that should be deleted
-                else if (current == head && info == current.getInfo()){
+                else if (current == head && item == current.getItem()){
                     // null (old head) <-- head
                     next.setPrev(null);
                     head = next;
@@ -176,7 +191,7 @@
                     success = true;
                 }
                 // If the tail is the data that should be deleted
-                else if (current == tail && info == current.getInfo()){
+                else if (current == tail && item == current.getItem()){
                     // tail --> null (old tail)
                     prev.setNext(null);
                     tail = prev;
@@ -184,7 +199,7 @@
                     success = true;
                 }
                 // If a node (that isn't head or tail) should be deleted
-                else if (info == current.getInfo()){
+                else if (item == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);
                     next.setPrev(prev);
@@ -199,10 +214,12 @@
         return success;
     }
 
-    /** This function deletes the last occurrence of the inputted value.
-     * @param info The value you want deleted.
-     * @return Whether or not the value was successfully deleted */
-    public boolean deleteLastOccurrence(E info){
+    /**
+     * This function deletes the last occurrence of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return Whether or not the value was successfully deleted
+     */
+    public boolean deleteLastOccurrenceOfItem(E info){
         boolean success = false;
         Node<E> current = tail;
         // If no list exists
@@ -215,7 +232,7 @@
                 Node<E> prev = current.getPrev();
                 Node<E> next = current.getNext();
                 // If there is only one node and that should be deleted
-                if (head == tail && info == current.getInfo()){
+                if (head == tail && info == current.getItem()){
                     // Deletes head + tail
                     head = null;
                     tail = null;
@@ -223,7 +240,7 @@
                     success = true;
                 }
                 // If the head is the data that should be deleted
-                else if (current == head && info == current.getInfo()){
+                else if (current == head && info == current.getItem()){
                     // null (old head) <-- head
                     next.setPrev(null);
                     head = next;
@@ -231,7 +248,7 @@
                     success = true;
                 }
                 // If the tail is the data that should be deleted
-                else if (current == tail && info == current.getInfo()){
+                else if (current == tail && info == current.getItem()){
                     // tail --> null (old tail)
                     prev.setNext(null);
                     tail = prev;
@@ -239,7 +256,7 @@
                     success = true;
                 }
                 // If a node (that isn't head or tail) should be deleted
-                else if (info == current.getInfo()){
+                else if (info == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);
                     next.setPrev(prev);
@@ -253,10 +270,12 @@
         return success;
     }
 
-    /**This function deletes all occurrences of the inputted value.
-     * @param info The value you want deleted.
-     * @return How many times the value got deleted. */
-    public int deleteAllOccurrence(E info){
+    /**
+     * This function deletes all occurrences of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return How many times the item got deleted.
+     */
+    public int deleteAllOccurrenceOfItem(String item){
         int deleted = 0;
         Node<E> current = head;
         // If no list exists
@@ -269,7 +288,7 @@
                 Node<E> prev = current.getPrev();
                 Node<E> next = current.getNext();
                 // If there is only one node and that should be deleted
-                if (head == tail && info == current.getInfo()){
+                if (head == tail && item == current.getItem()){
                     // Deletes head + tail
                     head = null;
                     tail = null;
@@ -277,7 +296,7 @@
                     deleted++;
                 }
                 // If the head is the data that should be deleted
-                else if (current == head && info == current.getInfo()){
+                else if (current == head && item == current.getItem()){
                     // null (old head) <-- head
                     next.setPrev(null);
                     head = next;
@@ -285,7 +304,7 @@
                     deleted++;
                 }
                 // If the tail is the data that should be deleted
-                else if (current == tail && info == current.getInfo()){
+                else if (current == tail && item == current.getItem()){
                     // tail --> null (old tail)
                     prev.setNext(null);
                     tail = prev;
@@ -293,7 +312,7 @@
                     deleted++;
                 }
                 // If a node (that isn't head or tail) should be deleted
-                else if (info == current.getInfo()){
+                else if (item == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);
                     next.setPrev(prev);
@@ -307,25 +326,41 @@
         return deleted;
      }
      
-    /** This function prints out the entire linked list from head to tail.  */
+    /** 
+     * This function prints out the entire linked list from head to tail. 
+     */
     public void printForward(){
 	    Node<E> current = head;
+        String formattedPrice;
 	    System.out.print("[ ");
-	    while (current != null){
-	        System.out.print(current.getInfo() + " ");
+	    while (current != null && current.getNext() != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+	        System.out.print(current.getItem() + " = $"+ formattedPrice +", ");
 	        current = current.getNext();
 	    }
-	    System.out.println("]");
+        if (current != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            System.out.print(current.getItem() + " = $"+ formattedPrice +"");
+        }
+	    System.out.println(" ]");
     }
 
-    /** This function prints out the entire linked list from tail to head. */
+    /** 
+     * This function prints out the entire linked list from tail to head. 
+     */ 
     public void printBackwards(){
 	    Node<E> current = tail;
+        String formattedPrice;
         System.out.print("[ ");
-	    while (current != null){
-	        System.out.print(current.getInfo() + " ");
-	        current = current.getPrev();
+	    while (current != null && current.getPrev() != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+	        System.out.print(current.getItem() + " = $"+ formattedPrice +", ");
+            current = current.getPrev();
 	    }
-	    System.out.println("]");
+        if (current != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            System.out.print(current.getItem() + " = $"+ formattedPrice +"");
+        }
+	    System.out.println(" ]");
     }
 }

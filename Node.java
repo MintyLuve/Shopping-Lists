@@ -1,5 +1,6 @@
 public class Node<E>{
-    private E info;
+    private String item;
+    private double price;
     private Node<E> next;
     
     // For doubly linked lists only
@@ -9,26 +10,34 @@ public class Node<E>{
 	    this.next = null;
     }
 
-    public Node(E info){
-	    this.info = info;
+    public Node(String item, double price){
+        this.item = item;
+        this.price = price;
 	    this.next = null;
 
         // For doubly linked lists only
         this.prev = null;
     }
-    public Node(E info, Node<E> next){
-	    this.info = info;
+    public Node(String item, double price, Node<E> next){
+	    this.item = item;
+        this.price = price;
 	    this.next = next;
 
         // For doubly linked lists only
         this.prev = null;
     }
 
-    public E getInfo(){
-	    return this.info;
+    public String getItem(){
+	    return this.item;
     }
-    public void setInfo(E info){
-	    this.info = info;
+    public void setItem(String item){
+	    this.item = item;
+    }
+    public double getPrice(){
+	    return this.price;
+    }
+    public void setPrice(double price){
+	    this.price = price;
     }
     public Node<E> getNext(){
 	    return this.next;
