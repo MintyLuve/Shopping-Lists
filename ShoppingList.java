@@ -75,6 +75,7 @@
             // first (new item) <--> old first
             newItem.setNext(head);
             head = newItem;
+            tail = newItem;
         }
         // if the item name is less then the first value
         else if (item.compareTo(head.getItem()) < 0){
@@ -162,6 +163,71 @@
     }
 
     /**
+     * This function extracts the price of the first occurrence of the inputted item.
+     * @param item The name of the item you want deleted.
+     * @return The price of the item that was deleted
+     */
+    public double extractPrice(String item){
+        double price = 0;
+        Item current = head;
+        // If no list exists
+        if(head == null && tail == null){
+            return price;
+        }
+        else {
+            // While current exists
+            while (current != null) {
+                Item prev = current.getPrev();
+                Item next = current.getNext();
+                // If there is only one item and that should be deleted
+                if (head.equals(tail) && current.getItem().equals(item)){
+                    // Deletes head + tail
+                    head = null;
+                    tail = null;
+                    // Successfully deletes the first one, returning the price
+                    return current.getPrice();
+                }
+                // If the head is the item that should be deleted
+                else if (current.equals(head) && current.getItem().equals(item)){
+                    // null (old head) <-- head
+                    next.setPrev(null);
+                    head = next;
+                    // Successfully deletes the first one, returning the price
+                    return current.getPrice();
+                }
+                // If the tail is the item that should be deleted
+                else if (current.equals(tail) && current.getItem().equals(item)){
+                    // tail --> null (old tail)
+                    prev.setNext(null);
+                    tail = prev;
+                    // Successfully deletes the first one, returning the price
+                    return current.getPrice();
+                }
+                // If a item (that isn't head or tail) should be deleted
+                else if (current.getItem().equals(item)){
+                    // prev <--> next (deletes current)
+                    prev.setNext(next);
+                    next.setPrev(prev);
+                    // Successfully deletes the first one, returning the price
+                    return current.getPrice();
+                }
+                // Traverses the list
+                current = current.getNext();
+            }
+        } 
+        return price;
+    }
+
+    /**
+     * This function finds if there are items in the list
+     * @return Whether or not there are items in the list
+     */
+    public boolean hasItems(){
+        if(head == null && tail == null){ return false; }
+        else { return true; }
+    }
+
+    /**
      * This function finds if an item is in the list.
      * @param item The name of the item you want deleted.
      * @return Whether or not the item is in the list
@@ -174,7 +240,6 @@
             // While current exists
             while (current != null) {
                 // If the item is in the list
-                System.out.println("|it:"+item+" cur:"+current.getItem()+"|");
                 if (current.getItem().equals(item)){
                     return true;
                 }
@@ -394,13 +459,14 @@
 
     /** 
      * This function prints out the entire linked list from head to tail, formatted as a shopping list. 
+     * @param title The title of the list.
      */
-    public void printAsShoppingList(){
+    public void printAsShoppingList(String title){
 	    Item current = head;
         String formattedPrice, formattedItem;
         int itemLength;
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-	    System.out.println("\t--Shopping List--");
+	    System.out.println("\t--"+title+"--");
 	    while (current != null && current.getNext() != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
             itemLength = current.getItem().length()+1;

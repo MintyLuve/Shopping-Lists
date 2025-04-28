@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
 public class Main {
+	public static ShoppingList list = new ShoppingList();
+	public static ShoppingList purchased = new ShoppingList();
+
     public static void main(String args[]){
-		ShoppingList list = new ShoppingList();
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
@@ -35,15 +37,20 @@ public class Main {
 			list.insertSortedAlphabetically(item, price);
 			sc.nextLine();
 		}
-		list.printAsShoppingList();
+		list.printAsShoppingList("Shopping List");
 
 		System.out.println("Time to head to the store!\n" +
 						   "Start by typing the first item you want to buy.\n" +
 						   "Type !view at any time to see your list\n" + 
 						   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-		ShoppingList purchased = new ShoppingList();
-		buyItem(getInput(sc, list, "Enter item: "), list, purchased);
+		double total = 0;
+		while (list.hasItems()) {
+			total = buyItem(getInput(sc, "Enter item: "), total);
+		}
+		purchased.printAsShoppingList("You Purchased");
+		String formattedTotal = String.format("%." + 2 + "f", total);
+		System.out.println("Your total is: $"+ formattedTotal + "\nHave a good day~!");
 
     }
 
@@ -51,6 +58,9 @@ public class Main {
 		int lastIndex = 0;
 		String output = "";
 		String word = "";
+		if (input.length() == 0) {
+			return output;
+		}
 		for (int i = 1; i< input.length()-2; i++) {
 			if (input.substring(i, i+1).equals(" ") && !input.substring(i+1, i+2).equals(" ")) {
 				word = input.substring(lastIndex, i);
@@ -63,22 +73,33 @@ public class Main {
 		return output;
 	}
 
-	private static String getInput(Scanner sc, ShoppingList list, String text){
-		System.out.println(text);
+	private static String getInput(Scanner sc, String text){
+		System.out.print(text);
 		String input = sc.nextLine();
 		if (input.equals("!view")){
-			list.printAsShoppingList();
-			input = getInput(sc, list, text);
+			list.printAsShoppingList("Shopping List");
+			input = getInput(sc, text);
 		}
 		return formatString(input);
 	}
 
-	private static void buyItem(String item, ShoppingList list, ShoppingList purchased){
-		if (list.isInList(item)){
-			System.out.println(item+" is in list");
+	private static double buyItem(String item, double total){
+		// If the item is not in the list
+		if (!list.isInList(item)){
+			System.out.println("You don't need to buy "+item.toLowerCase()+".");
+			return total;
+		}
+		if (Math.random() > 0.25){
+			double price = list.extractPrice(item);
+			total += price;
+			purchased.insertSortedAlphabetically(item, price);
+			String formattedTotal = String.format("%." + 2 + "f", total);
+			System.out.println(item+" purchased | Total: $" + formattedTotal);
 		}
 		else {
-			System.out.println(item+" is not in list");
+			System.out.println(item+" is out of stock! You'll have to buy it next time.");
+			list.extractPrice(item);
 		}
+		return total;
 	}
 }
