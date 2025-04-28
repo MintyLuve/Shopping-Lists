@@ -1,32 +1,24 @@
-public class Node{
+public class Item{
     private String item;
     private double price;
-    private Node next;
-    
-    // For doubly linked lists only
-    private Node prev;
+    private Item next;
+    private Item prev;
 
-    public Node(){
+    public Item(){
 	    this.next = null;
     }
-
-    public Node(String item, double price){
+    public Item(String item, double price){
         this.item = item;
         this.price = price;
 	    this.next = null;
-
-        // For doubly linked lists only
         this.prev = null;
     }
-    public Node(String item, double price, Node next){
+    public Item(String item, double price, Item next){
 	    this.item = item;
         this.price = price;
 	    this.next = next;
-
-        // For doubly linked lists only
         this.prev = null;
     }
-
     public String getItem(){
 	    return this.item;
     }
@@ -39,21 +31,16 @@ public class Node{
     public void setPrice(double price){
 	    this.price = price;
     }
-    public Node getNext(){
+    public Item getNext(){
 	    return this.next;
     }
-
-    public void setNext(Node next){
+    public void setNext(Item next){
 	    this.next = next;
     }
-
-    
-    /* For doubly linked lists only */
-    public Node getPrev(){
+    public Item getPrev(){
 	    return this.prev;
     }
-
-    public void setPrev(Node prev){
+    public void setPrev(Item prev){
 	    this.prev = prev;
     }
 

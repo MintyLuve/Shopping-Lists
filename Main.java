@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]){
-		DoublyLinkedList shoppingList = new DoublyLinkedList();
+		ShoppingList shoppingList = new ShoppingList();
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Go you to open your fridge, and realize it's basically empty! You need to go grocery shopping.\n" +
@@ -51,6 +51,6 @@ public class Main {
 
 		shoppingList.printAsShoppingList();
 
-		
+
     }
 }

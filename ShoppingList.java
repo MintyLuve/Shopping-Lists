@@ -1,12 +1,16 @@
+/* CITATION: The base code was based off of the audited course
+   Introduction to Java Programming: Fundamental Data Structures and Algorithms on EdX
+   https://learning.edx.org/course/course-v1:UC3Mx+IT.1.3x+3T2024/home  */
+
 /** A doubly linked list that can: <ul>
  *   <li> Insert from the beginning, end, and sorted </li>
  *   <li> Extract from the beginning or the end </li>
  *   <li> Delete the first or last occurrence of an item </li>
  *   <li> Delete all occurrences of an item </li>
  *   <li> Print the entire list forwards and backwards</li> </ul> */
- public class DoublyLinkedList {
-    private Node head;
-    private Node tail;
+ public class ShoppingList {
+    private Item head;
+    private Item tail;
 
     /** A doubly linked list that can: <ul>
      *   <li> Insert from the beginning, end, and sorted </li>
@@ -14,7 +18,7 @@
      *   <li> Delete the first or last occurrence of an item </li>
      *   <li> Delete all occurrences of an item </li>
      *   <li> Print the entire list forwards and backwards</li> </ul> */
-    public DoublyLinkedList(){
+    public ShoppingList(){
         // Creates the head and the tail
 	    this.head = null;
         this.tail = null;
@@ -26,7 +30,7 @@
      * @param price The price of the item you want to insert.
      */
     public void insertBeginning(String item, double price){
-	    Node newNode = new Node(item, price);
+	    Item newNode = new Item(item, price);
         // head (new node) --> old head
 	    newNode.setNext(head);
         // if the head exists, sets the previous to new node
@@ -46,7 +50,7 @@
      * @param price The price of the item you want to insert.
      */
     public void insertEnd(String item, double price){
-	    Node newNode = new Node(item, price);
+	    Item newNode = new Item(item, price);
 	    if (tail == null){
             // If there is nothing in the list, adds new node
             head = newNode;
@@ -65,7 +69,7 @@
      */
     public void insertSortedAlphabetically(String item, double price){
         // Gets the new node
-	    Node newNode = new Node(item, price);
+	    Item newNode = new Item(item, price);
         // if the list doesn't exist
         if(head == null){
             // first (new node) <--> old first
@@ -81,13 +85,13 @@
         } 
         else {
             //current node to use to go through the list
-            Node currentNode = head;
+            Item currentNode = head;
             //while there is a next node in the list
             while (currentNode.getNext() != null){
                 //if the item name is greater then the current item name, but smaller then the next item name
                 if (item.compareTo(currentNode.getItem()) > 0 && item.compareTo(currentNode.getNext().getItem()) <= 0){
                     // current node <--> new node <--> next node
-                    Node nextNode = currentNode.getNext();
+                    Item nextNode = currentNode.getNext();
 
                     newNode.setNext(nextNode);
                     newNode.setPrev(currentNode);
@@ -164,7 +168,7 @@
      */
     public boolean deleteFirstOccurrenceOfItem(String item){
         boolean success = false;
-        Node current = head;
+        Item current = head;
         // If no list exists
         if(head == null && tail == null){
             return success;
@@ -172,8 +176,8 @@
         else {
             // While current exists
             while (current != null && !success) {
-                Node prev = current.getPrev();
-                Node next = current.getNext();
+                Item prev = current.getPrev();
+                Item next = current.getNext();
                 // If there is only one node and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
@@ -221,7 +225,7 @@
      */
     public boolean deleteLastOccurrenceOfItem(String item){
         boolean success = false;
-        Node current = tail;
+        Item current = tail;
         // If no list exists
         if(head == null && tail == null){
             return success;
@@ -229,8 +233,8 @@
         else {
             // While current exists
             while (current != null && !success) {
-                Node prev = current.getPrev();
-                Node next = current.getNext();
+                Item prev = current.getPrev();
+                Item next = current.getNext();
                 // If there is only one node and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
@@ -277,7 +281,7 @@
      */
     public int deleteAllOccurrenceOfItem(String item){
         int deleted = 0;
-        Node current = head;
+        Item current = head;
         // If no list exists
         if(head == null && tail == null){
             return deleted;
@@ -285,8 +289,8 @@
         else {
             // While current exists
             while (current != null) {
-                Node prev = current.getPrev();
-                Node next = current.getNext();
+                Item prev = current.getPrev();
+                Item next = current.getNext();
                 // If there is only one node and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
@@ -330,7 +334,7 @@
      * This function prints out the entire linked list from head to tail. 
      */
     public void printForward(){
-	    Node current = head;
+	    Item current = head;
         String formattedPrice;
 	    System.out.print("[ ");
 	    while (current != null && current.getNext() != null){
@@ -349,7 +353,7 @@
      * This function prints out the entire linked list from tail to head. 
      */ 
     public void printBackwards(){
-	    Node current = tail;
+	    Item current = tail;
         String formattedPrice;
         System.out.print("[ ");
 	    while (current != null && current.getPrev() != null){
@@ -368,7 +372,7 @@
      * This function prints out the entire linked list from head to tail, formatted as a shopping list. 
      */
     public void printAsShoppingList(){
-	    Node current = head;
+	    Item current = head;
         String formattedPrice, formattedItem;
         int itemLength;
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
