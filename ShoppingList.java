@@ -30,17 +30,17 @@
      * @param price The price of the item you want to insert.
      */
     public void insertBeginning(String item, double price){
-	    Item newNode = new Item(item, price);
-        // head (new node) --> old head
-	    newNode.setNext(head);
-        // if the head exists, sets the previous to new node
+	    Item newItem = new Item(item, price);
+        // head (new item) --> old head
+	    newItem.setNext(head);
+        // if the head exists, sets the previous to new item
 	    if (head != null){
-	        head.setPrev(newNode);
+	        head.setPrev(newItem);
 	    }
-	    head = newNode;
-        // if there is no tail sets it to new node
+	    head = newItem;
+        // if there is no tail sets it to new item 
 	    if (tail == null){
-	        tail = newNode;
+	        tail = newItem ;
 	    }
     }
     
@@ -50,15 +50,15 @@
      * @param price The price of the item you want to insert.
      */
     public void insertEnd(String item, double price){
-	    Item newNode = new Item(item, price);
+	    Item newitem  = new Item(item, price);
 	    if (tail == null){
-            // If there is nothing in the list, adds new node
-            head = newNode;
-	        tail = newNode;
+            // If there is nothing in the list, adds new item
+            head = newitem;
+	        tail = newitem;
 	    } else{
-            tail.setNext(newNode);
-            newNode.setPrev(tail);
-	        tail = newNode;
+            tail.setNext(newitem);
+            newitem.setPrev(tail);
+	        tail = newitem;
 	   }
     }
 
@@ -68,60 +68,60 @@
      * @param price The price of the item you want to insert.
      */
     public void insertSortedAlphabetically(String item, double price){
-        // Gets the new node
-	    Item newNode = new Item(item, price);
+        // Gets the new item
+	    Item newItem = new Item(item, price);
         // if the list doesn't exist
         if(head == null){
-            // first (new node) <--> old first
-            newNode.setNext(head);
-            head = newNode;
+            // first (new item) <--> old first
+            newItem.setNext(head);
+            head = newItem;
         }
         // if the item name is less then the first value
         else if (item.compareTo(head.getItem()) < 0){
-            // first (new node) --> old first
-            newNode.setNext(head);
-            head.setPrev(newNode);
-            head = newNode;
+            // first (new item) --> old first
+            newItem.setNext(head);
+            head.setPrev(newItem);
+            head = newItem;
         } 
         else {
-            //current node to use to go through the list
-            Item currentNode = head;
-            //while there is a next node in the list
-            while (currentNode.getNext() != null){
+            //current item to use to go through the list
+            Item currentItem = head;
+            //while there is a next item in the list
+            while (currentItem.getNext() != null){
                 //if the item name is greater then the current item name, but smaller then the next item name
-                if (item.compareTo(currentNode.getItem()) > 0 && item.compareTo(currentNode.getNext().getItem()) <= 0){
-                    // current node <--> new node <--> next node
-                    Item nextNode = currentNode.getNext();
+                if (item.compareTo(currentItem.getItem()) > 0 && item.compareTo(currentItem.getNext().getItem()) <= 0){
+                    // current item <--> new item <--> next item
+                    Item nextItem = currentItem.getNext();
 
-                    newNode.setNext(nextNode);
-                    newNode.setPrev(currentNode);
+                    newItem.setNext(nextItem);
+                    newItem.setPrev(currentItem);
                     
-                    currentNode.setNext(newNode);
-                    nextNode.setPrev(newNode);
+                    currentItem.setNext(newItem);
+                    nextItem.setPrev(newItem);
                     break;
                 } else{
-                    // moves onto the next node in the list
-                    currentNode = currentNode.getNext();
+                    // moves onto the next item in the list
+                    currentItem = currentItem.getNext();
                 }
             }  
-            // if the new node was not smaller then the last node 
-            if (currentNode.getNext() == null) {
-                // becomes the last node
-                // current <--> new node (tail)
-                currentNode.setNext(newNode);
-                newNode.setPrev(currentNode);
-                tail = newNode;
+            // if the new item was not smaller then the last item 
+            if (currentItem.getNext() == null) {
+                // becomes the last item
+                // current <--> new item (tail)
+                currentItem.setNext(newItem);
+                newItem.setPrev(currentItem);
+                tail = newItem;
             }
         }
     }
     
     /**
-     * This function removes the first node from the list, and returns its name
+     * This function removes the first item from the list, and returns its name
      * @return The name of the first item
      */
     public String extractFirstItem(){
 	    String item = null;
-        // If the head and the next node exists
+        // If the head and the next item exists
 	    if (head != null && head.getNext() != null){
             // Returns the item name and moves the head up one
             item = head.getItem();
@@ -130,7 +130,7 @@
         }
         // If only the head exists
         else if (head != null){
-            // Returns item name and deletes the node
+            // Returns item name and deletes the item
             item = head.getItem();
             head = null;
             tail = null;
@@ -144,7 +144,7 @@
      */
     public String extractLastItem(){
 	    String item = null;
-        // If the tail and the previous node exists
+        // If the tail and the previous item exists
 	    if (tail != null && tail.getPrev() != null){
             // Returns the item name and moves the tail back one
             item = tail.getItem();
@@ -153,12 +153,36 @@
         }
         // If only the tail exists
         else if (tail != null){
-            // Returns item name and deletes the node
+            // Returns item name and deletes the item
             item = tail.getItem();
             tail = null;
             head = null;
         }
 	    return item;
+    }
+
+    /**
+     * This function finds if an item is in the list.
+     * @param item The name of the item you want deleted.
+     * @return Whether or not the item is in the list
+     */
+    public boolean isInList(String item){
+        Item current = head;
+        // If no list exists
+        if(head == null && tail == null){ return false; }
+        else {
+            // While current exists
+            while (current != null) {
+                // If the item is in the list
+                System.out.println("|it:"+item+" cur:"+current.getItem()+"|");
+                if (current.getItem().equals(item)){
+                    return true;
+                }
+                // Traverses the list
+                current = current.getNext();
+            }
+        } 
+        return false;
     }
 
     /**
@@ -178,7 +202,7 @@
             while (current != null && !success) {
                 Item prev = current.getPrev();
                 Item next = current.getNext();
-                // If there is only one node and that should be deleted
+                // If there is only one item and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
                     head = null;
@@ -202,7 +226,7 @@
                     // Successfully deletes the first one, ending the loop
                     success = true;
                 }
-                // If a node (that isn't head or tail) should be deleted
+                // If a item (that isn't head or tail) should be deleted
                 else if (item == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);
@@ -235,7 +259,7 @@
             while (current != null && !success) {
                 Item prev = current.getPrev();
                 Item next = current.getNext();
-                // If there is only one node and that should be deleted
+                // If there is only one item and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
                     head = null;
@@ -259,7 +283,7 @@
                     // Successfully deletes the first one, ending the loop
                     success = true;
                 }
-                // If a node (that isn't head or tail) should be deleted
+                // If a item (that isn't head or tail) should be deleted
                 else if (item == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);
@@ -291,7 +315,7 @@
             while (current != null) {
                 Item prev = current.getPrev();
                 Item next = current.getNext();
-                // If there is only one node and that should be deleted
+                // If there is only one item and that should be deleted
                 if (head == tail && item == current.getItem()){
                     // Deletes head + tail
                     head = null;
@@ -315,7 +339,7 @@
                     // Increments the amount of times it was deleted
                     deleted++;
                 }
-                // If a node (that isn't head or tail) should be deleted
+                // If a item (that isn't head or tail) should be deleted
                 else if (item == current.getItem()){
                     // prev <--> next (deletes current)
                     prev.setNext(next);

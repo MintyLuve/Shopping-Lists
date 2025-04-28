@@ -5,7 +5,8 @@ public class Main {
 		ShoppingList list = new ShoppingList();
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Go you to open your fridge, and realize it's basically empty! You need to go grocery shopping.\n" +
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+						   "Go you to open your fridge, and realize it's basically empty! You need to go grocery shopping.\n" +
 						   "You need to write down what you need to buy- and how much it's going to cost.\n" +
 						   "Type !stop to stop creating your shopping list.\n" + 
 						   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -37,10 +38,13 @@ public class Main {
 		list.printAsShoppingList();
 
 		System.out.println("Time to head to the store!\n" +
-						   "Start by typing the first item.\n" +
+						   "Start by typing the first item you want to buy.\n" +
 						   "Type !view at any time to see your list\n" + 
 						   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println(getInput(sc, list, "Enter item: "));
+
+		ShoppingList purchased = new ShoppingList();
+		buyItem(getInput(sc, list, "Enter item: "), list, purchased);
+
     }
 
 	private static String formatString(String input){
@@ -67,5 +71,14 @@ public class Main {
 			input = getInput(sc, list, text);
 		}
 		return formatString(input);
+	}
+
+	private static void buyItem(String item, ShoppingList list, ShoppingList purchased){
+		if (list.isInList(item)){
+			System.out.println(item+" is in list");
+		}
+		else {
+			System.out.println(item+" is not in list");
+		}
 	}
 }
