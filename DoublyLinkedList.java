@@ -340,7 +340,7 @@
 	    }
         if (current != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
-            System.out.print(current.getItem() + " = $"+ formattedPrice +"");
+            System.out.print(current.getItem() + " = $"+ formattedPrice);
         }
 	    System.out.println(" ]");
     }
@@ -359,8 +359,30 @@
 	    }
         if (current != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
-            System.out.print(current.getItem() + " = $"+ formattedPrice +"");
+            System.out.print(current.getItem() + " = $"+ formattedPrice);
         }
 	    System.out.println(" ]");
+    }
+
+    /** 
+     * This function prints out the entire linked list from head to tail, formatted as a shopping list. 
+     */
+    public void printAsShoppingList(){
+	    Node current = head;
+        String formattedPrice, formattedItem;
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	    System.out.println("\t--Shopping List--");
+	    while (current != null && current.getNext() != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            formattedItem = String.format("%-" + 20 + "s", current.getItem());
+	        System.out.println(formattedItem + ". . . . . .    $"+ formattedPrice);
+	        current = current.getNext();
+	    }
+        if (current != null){
+            formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            formattedItem = String.format("%-" + 20 + "s", current.getItem());
+            System.out.print(formattedItem + " . . . . . .    $"+ formattedPrice);
+        }
+        System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }

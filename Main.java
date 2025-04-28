@@ -22,8 +22,8 @@ public class Main {
 			int lastIndex = 0;
 			String newItem = "";
 			String word = "";
-			for (int i = 0; i< item.length()-1; i++) {
-				if (item.substring(i, i+1).equals(" ")) {
+			for (int i = 1; i< item.length()-1; i++) {
+				if (item.substring(i, i+1).equals(" ") && !item.substring(i+1, i+2).equals(" ")) {
 					word = item.substring(lastIndex, i);
 					newItem += word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase() + " "; 
 					lastIndex = i+1;
@@ -49,7 +49,7 @@ public class Main {
 			sc.nextLine();
 		}
 
-		shoppingList.printForward();
+		shoppingList.printAsShoppingList();
 
 		
     }
