@@ -370,18 +370,23 @@
     public void printAsShoppingList(){
 	    Node current = head;
         String formattedPrice, formattedItem;
+        int itemLength;
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	    System.out.println("\t--Shopping List--");
 	    while (current != null && current.getNext() != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            itemLength = current.getItem().length()+1;
             formattedItem = String.format("%-" + 20 + "s", current.getItem());
-	        System.out.println(formattedItem + ". . . . . .    $"+ formattedPrice);
+            formattedItem = formattedItem.substring(0, itemLength)+formattedItem.substring(itemLength).replace(' ', '.');
+	        System.out.println(formattedItem + "...... $"+ formattedPrice);
 	        current = current.getNext();
 	    }
         if (current != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
+            itemLength = current.getItem().length()+1;
             formattedItem = String.format("%-" + 20 + "s", current.getItem());
-            System.out.print(formattedItem + " . . . . . .    $"+ formattedPrice);
+            formattedItem = formattedItem.substring(0, itemLength)+formattedItem.substring(itemLength).replace(' ', '.');
+            System.out.print(formattedItem + "...... $"+ formattedPrice);
         }
         System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
