@@ -97,12 +97,24 @@ public class Main {
 			System.out.println("You don't need to buy "+item.toLowerCase()+".");
 			return total;
 		}
-		if (Math.random() > 0.25){
+		double chance = Math.random();
+		if (chance > 0.4){
 			double price = list.extractPrice(item);
 			total += price;
 			purchased.insertSortedAlphabetically(item, price);
 			String formattedTotal = String.format("%." + 2 + "f", total);
-			System.out.println(item+" purchased | Total: $" + formattedTotal);
+			System.out.println("Purchased "+item.toLowerCase()+" | Total: $" + formattedTotal);
+		}
+		else if (chance > 0.2){
+			System.out.println(item+" is on sale for 15% off!");
+			double price = list.extractPrice(item);
+			double savings = price * 0.15;
+			price -= savings;
+			total += price;
+			purchased.insertSortedAlphabetically(item +" (SALE)", price);
+			String formattedTotal = String.format("%." + 2 + "f", total);
+			String formattedSavings = String.format("%." + 2 + "f", savings);
+			System.out.println("Purchased "+item.toLowerCase()+" on sale, saving $" + formattedSavings+ " | Total: $" + formattedTotal);
 		}
 		else {
 			System.out.println(item+" is out of stock! You'll have to buy it next time.");
