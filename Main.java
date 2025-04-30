@@ -40,8 +40,9 @@ public class Main {
 		list.printAsShoppingList("Shopping List");
 
 		System.out.println("Time to head to the store!\n" +
-						   "Start by typing the first item you want to buy.\n" +
-						   "Type !view at any time to see your list\n" + 
+						   "Now that you are there, start by typing the first item you want to buy.\n" +
+						   "Type !view at any time to see your list.\n" + 
+						   "Type !stop at any time to stop buying items.\n" + 
 						   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 		double total = 0;
@@ -80,11 +81,18 @@ public class Main {
 			list.printAsShoppingList("Shopping List");
 			input = getInput(sc, text);
 		}
+		if (input.equals("!stop")){
+			return "!stop";
+		}
 		return formatString(input);
 	}
 
 	private static double buyItem(String item, double total){
 		// If the item is not in the list
+		if (item.equals("!stop")){
+			list.deleteAllItemsInList();
+			return total;
+		}
 		if (!list.isInList(item)){
 			System.out.println("You don't need to buy "+item.toLowerCase()+".");
 			return total;

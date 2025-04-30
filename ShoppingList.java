@@ -251,6 +251,14 @@
     }
 
     /**
+     * This function deletes the pointers to the list, effectively deleting the list.
+     */
+    public void deleteAllItemsInList(){
+        head = null;
+        tail = null;
+    }
+
+    /**
      * This function deletes the first occurrence of the inputted item.
      * @param item The name of the item you want deleted.
      * @return Whether or not the item was successfully deleted
