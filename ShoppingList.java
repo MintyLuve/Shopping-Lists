@@ -469,7 +469,7 @@
 	    System.out.println("\t--"+title+"--");
 	    while (current != null && current.getNext() != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
-            itemLength = current.getItem().length()+1;
+            itemLength = current.getItem().length();
             formattedItem = String.format("%-" + 20 + "s", current.getItem());
             formattedItem = formattedItem.substring(0, itemLength)+formattedItem.substring(itemLength).replace(' ', '.');
 	        System.out.println(formattedItem + "...... $"+ formattedPrice);
@@ -477,9 +477,9 @@
 	    }
         if (current != null){
             formattedPrice = String.format("%." + 2 + "f", current.getPrice());
-            itemLength = current.getItem().length()+1;
+            itemLength = current.getItem().length();
             formattedItem = String.format("%-" + 20 + "s", current.getItem());
-            formattedItem = formattedItem.substring(0, itemLength)+formattedItem.substring(itemLength).replace(' ', '.');
+            formattedItem = formattedItem.substring(0, itemLength-1)+formattedItem.substring(itemLength-1).replace(' ', '.');
             System.out.print(formattedItem + "...... $"+ formattedPrice);
         }
         System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
