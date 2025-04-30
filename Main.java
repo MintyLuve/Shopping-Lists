@@ -143,10 +143,11 @@ public class Main {
 		}
 		// 20% chance the item is 15% off
 		else if (chance > 0.2){
-			// Calculates sale price
-			System.out.println(item+" is on sale for 15% off!");
+			// Calculates sale price between 10% and 20%
+			int percent = (int) (Math.random() * 10) + 10;
+			System.out.println(item+" is on sale for "+percent+"% off!");
 			double price = list.extractPrice(item);
-			double savings = price * 0.15;
+			double savings = price * (percent/100.0);
 			price -= savings;
 			total += price;
 			// Adds purcahsed item to list
